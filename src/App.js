@@ -48,6 +48,7 @@ class GradeForm extends React.Component {
             this.setState({validationOn: false});
             this.setState({courseValid: false});
             this.setState({gradeValid: false});
+            this.setState({grade: {id: this.state.grade.id, courseName: "", grade: ""}});
             this.props.onChange(this.props.editing ? 'edit' : 'add', this.state.grade);
         }
     }
