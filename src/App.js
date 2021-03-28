@@ -184,17 +184,17 @@ class GradesList extends React.Component {
 class GradesResults extends React.Component {
 
     calcMin() {
-        if (this.props.grades.length === 0) return "";
+        if (this.props.grades.length === 0) return 0;
         return this.props.grades.reduce((min, b) => Math.min(min, b.grade), this.props.grades[0].grade);
     }
 
     calcMax() {
-        if (this.props.grades.length === 0) return "";
+        if (this.props.grades.length === 0) return 0;
         return this.props.grades.reduce((max, b) => Math.max(max, b.grade), this.props.grades[0].grade);
     }
 
     calcAvg() {
-        if (this.props.grades.length === 0) return "";
+        if (this.props.grades.length === 0) return 0;
         return this.props.grades.reduce((a, b) => a + Number(b.grade), 0) / this.props.grades.length;
     }
 
