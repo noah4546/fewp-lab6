@@ -12,24 +12,44 @@ class GradeForm extends React.Component {
         this.state = {
             grade: {id: -1, courseName: "", grade: ""},
             editFiled: false,
-            courseValid: true,
-            gradeValid: true,
+            courseValid: false,
+            gradeValid: false,
+            validationOn: false,
         }; 
     }
 
-    handleButton() {
-        console.log(this.state.grade.courseName);
+    checkValidation() {
+        let valid = true;
 
-        if (this.state.grade.courseName == "hello") {
-            console.log("hello")
-            this.setState({courseValid: true});
+        if (this.state.grade.courseName === "") {
+            if (this.state.courseValid) this.setState({courseValid: false});
+            valid = false;
         } else {
-            this.setState({courseValid: false});
+            if (!this.state.courseValid) this.setState({courseValid: true});
         }
 
+        if (this.state.grade.grade === "" || this.state.grade.grade < 0 || this.state.grade.grade > 100) {
+            if (this.state.gradeValid) this.setState({gradeValid: false});
+            valid = false;
+        } else {
+            if (!this.state.gradeValid) this.setState({gradeValid: true});
+        }
 
-        if (this.state.courseValid && this.state.gradeValid) 
+        if (!this.state.validationOn) {
+            if (!this.state.courseValid || !this.state.gradeValid)
+                this.setState({validationOn: true});
+        }
+
+        return valid;
+    }
+
+    handleButton() {
+        if (this.checkValidation()) {
+            this.setState({validationOn: false});
+            this.setState({courseValid: false});
+            this.setState({gradeValid: false});
             this.props.onChange(this.props.editing ? 'edit' : 'add', this.state.grade);
+        }
     }
 
     handleCourseNameChange(event) {
@@ -43,6 +63,8 @@ class GradeForm extends React.Component {
     }
 
     componentDidUpdate() {
+        if (this.state.validationOn) this.checkValidation();
+
         if (this.props.editing && !this.state.editFiled) {
             this.setState({grade: this.props.editGrade});
             this.setState({editFiled: true});
@@ -55,6 +77,13 @@ class GradeForm extends React.Component {
     }
 
     render() {
+        let courseNameClass = "";
+        let gradeClass = "";
+        if (this.state.validationOn) {
+            courseNameClass = (this.state.courseValid ? "is-valid" : "is-invalid");
+            gradeClass = (this.state.gradeValid ? "is-valid" : "is-invalid");
+        }
+
         return (
             <div>
                 <h5 className="pb-2">Add Grade</h5>
@@ -62,7 +91,7 @@ class GradeForm extends React.Component {
                     <div className="col-md-4 col-sm-6 col-xs-12 input-group mt-2">
                         <input 
                             type="text" 
-                            className={"form-control"}
+                            className={"form-control " + courseNameClass}
                             placeholder="Course name" 
                             value={this.state.grade.courseName}
                             onChange={this.handleCourseNameChange.bind(this)}
@@ -71,16 +100,19 @@ class GradeForm extends React.Component {
                             Course name must not be empty
                         </div>
                     </div>
-                    <div className="col-md-2 col-sm-3 col-xs-12 form-group mt-2">
+                    <div className="col-md-3 col-sm-4 col-xs-12 form-group mt-2">
                         <input 
                             type="number" 
-                            className={"form-control"}
+                            className={"form-control " + gradeClass}
                             placeholder="Grade" 
                             min="0" 
                             max="100" 
                             value={this.state.grade.grade}
                             onChange={this.handleGradeChange.bind(this)}
                         />
+                        <div className="invalid-feedback">
+                            Grade must be between 0 and 100
+                        </div>
                     </div>
                     <div className="col-sm-2 col-xs-12 form-group mt-2">
                         <Button 
