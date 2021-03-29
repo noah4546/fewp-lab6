@@ -17,5 +17,7 @@ There is already a built version on my website here: https://grades.tnoah.ca/
 ## Statement of authorship
 
 ```
-I Noah Tomkins, 000790079 certify that this material is my original work. No other person’s work has been used without due acknowledgement. I have not made my work available to anyone else.
+I Noah Tomkins, 000790079 certify that this material is my original work. 
+No other person’s work has been used without due acknowledgement. 
+I have not made my work available to anyone else.
 ```
