@@ -1,4 +1,3 @@
-import './App.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
@@ -98,7 +97,7 @@ class GradeForm extends React.Component {
                             onChange={this.handleCourseNameChange.bind(this)}
                         />
                         <div className="invalid-feedback">
-                            Course name must not be empty
+                            Course Name cannot be blank
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-4 col-xs-12 form-group mt-2">
@@ -112,7 +111,7 @@ class GradeForm extends React.Component {
                             onChange={this.handleGradeChange.bind(this)}
                         />
                         <div className="invalid-feedback">
-                            Grade must be between 0 and 100
+                            Grade must be an integer between 0-100
                         </div>
                     </div>
                     <div className="col-sm-2 col-xs-12 form-group mt-2">
@@ -294,23 +293,18 @@ class App extends React.Component {
 
                 </header>
                 <main className="container mt-5">
-                    <div>
-                        <GradeForm 
-                            editing={this.state.editing} 
-                            editGrade={this.state.editGrade}
-                            onChange={this.handleGradeChange.bind(this)} 
-                        />
-                    </div>
-                    <div className="mt-4">
-                        <GradesList 
-                            grades={this.state.grades} 
-                            onEdit={this.handleEdit.bind(this)}
-                            onDelete={this.handleDelete.bind(this)}
-                        />
-                    </div>   
-                    <div>
-                        <GradesResults grades={this.state.grades} />
-                    </div> 
+                    <GradeForm 
+                        editing={this.state.editing} 
+                        editGrade={this.state.editGrade}
+                        onChange={this.handleGradeChange.bind(this)} 
+                    />
+                    <GradesList 
+                        className="mt-4"
+                        grades={this.state.grades} 
+                        onEdit={this.handleEdit.bind(this)}
+                        onDelete={this.handleDelete.bind(this)}
+                    />
+                    <GradesResults grades={this.state.grades} />
                 </main>
             </div>
           );
